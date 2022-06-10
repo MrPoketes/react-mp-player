@@ -1,6 +1,10 @@
 import React from 'react';
 
-export const PlayerRoot: React.FC = ({ children }) => {
+interface PlayerRootInterface {
+	children?: React.ReactNode;
+}
+
+export const PlayerRoot: React.FC<PlayerRootInterface> = ({ children }) => {
 	return (
 		<div
 			className="flex justify-center items-center bg-white fixed bottom-0 w-1/2 left-1/4 my-3 h-32"
