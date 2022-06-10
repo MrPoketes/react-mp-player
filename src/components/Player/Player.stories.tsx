@@ -6,4 +6,4 @@ export default {
 	component: Player.Root
 };
 
-export const Example = () => <Player.Root />;
+export const Example = () => <Player.Root>Root</Player.Root>;
