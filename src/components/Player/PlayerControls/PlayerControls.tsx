@@ -5,7 +5,7 @@ import { PlayerSeekPreviousButton } from './PlayerSeekPreviousButton';
 
 export const PlayerControls: React.FC = () => {
 	return (
-		<div className="flex items-center">
+		<div className="flex items-center justify-center">
 			<PlayerSeekPreviousButton />
 			<PlayerPlayButton />
 			<PlayerSeekNextButton />

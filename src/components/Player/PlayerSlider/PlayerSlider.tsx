@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 import * as Slider from '@radix-ui/react-slider';
 
 interface PlayerSlideInterface {
-	maxValue: number; //in seconds
+	maxValue: number;
 	isMusicSlider?: boolean;
 	stepValue?: number;
+	initialValue?: number;
 }
 
 export const PlayerSlider: React.FC<PlayerSlideInterface> = ({
 	maxValue,
 	stepValue = 1,
-	isMusicSlider = true
+	isMusicSlider = true,
+	initialValue = 0
 }) => {
 	const [value, setValue] = useState(0);
 	return (
@@ -24,6 +26,7 @@ export const PlayerSlider: React.FC<PlayerSlideInterface> = ({
 
 			<Slider.Root
 				onValueChange={value => setValue(value[0])}
+				defaultValue={[initialValue]}
 				className="relative flex items-center w-full h-3"
 				step={stepValue}
 				max={maxValue}
