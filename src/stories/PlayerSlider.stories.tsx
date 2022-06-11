@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerSlider } from './PlayerSlider';
+import { PlayerSlider } from '../components/Player/PlayerSlider/PlayerSlider';
 
 export default {
 	title: 'PlayerSlider',

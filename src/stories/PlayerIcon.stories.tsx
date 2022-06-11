@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerIcon } from './PlayerIcon';
+import { PlayerIcon } from '../components/Player/PlayerIcon/PlayerIcon';
 
 export default {
 	title: 'PlayerIcon',
