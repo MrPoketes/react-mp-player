@@ -3,12 +3,24 @@ import { PlayerPlayButton } from './PlayerPlayButton';
 import { PlayerSeekNextButton } from './PlayerSeekNextButton';
 import { PlayerSeekPreviousButton } from './PlayerSeekPreviousButton';
 
-export const PlayerControls: React.FC = () => {
+interface PlayerControlsInterface {
+	nextDisabled?: boolean;
+	previousDisabled?: boolean;
+}
+
+export interface PlayerSeekButtonInterface {
+	disabled?: boolean;
+}
+
+export const PlayerControls: React.FC<PlayerControlsInterface> = ({
+	nextDisabled = false,
+	previousDisabled = false
+}) => {
 	return (
 		<div className="flex items-center justify-center">
-			<PlayerSeekPreviousButton />
+			<PlayerSeekPreviousButton disabled={previousDisabled} />
 			<PlayerPlayButton />
-			<PlayerSeekNextButton />
+			<PlayerSeekNextButton disabled={nextDisabled} />
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PlayerControls } from '../PlayerControls/PlayerControls';
 import { PlayerIcon } from '../PlayerIcon/PlayerIcon';
 import { PlayerSlider } from '../PlayerSlider/PlayerSlider';
@@ -21,12 +21,36 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 	showImage = true
 }) => {
 	const [trackIndex, setTrackIndex] = useState(0);
-
 	const currentTrack = tracks[trackIndex];
-	const audioRef = useRef<HTMLAudioElement>(new Audio(currentTrack.audioSrc));
+	const [audioState, setAudioState] = useState(new Audio(currentTrack.audioSrc));
+
+	const previousTrack = (): void => {
+		if (trackIndex - 1 <= 0) {
+			setTrackIndex(trackIndex - 1);
+		}
+	};
+
+	const nextTrack = (): void => {
+		console.log(tracks);
+		if (trackIndex + 1 < tracks.length) {
+			setTrackIndex(trackIndex + 1);
+		}
+	};
+
+	// Handle changing tracks
+	useEffect(() => {
+		audioState.pause();
+		setAudioState(new Audio(currentTrack.audioSrc));
+	}, [trackIndex]);
 
 	return (
-		<PlayerContext.Provider value={{ audioElement: audioRef.current }}>
+		<PlayerContext.Provider
+			value={{
+				audioElement: audioState,
+				nextTrack: () => nextTrack(),
+				previousTrack: () => previousTrack()
+			}}
+		>
 			<div
 				className="flex bg-white fixed bottom-0 w-1/2 left-1/4 my-3 h-32"
 				style={{ boxShadow: '3px 3px 15px 2px rgba(0, 0, 0, 0.25)' }}
@@ -43,11 +67,14 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 							{currentTrack.artist}
 						</p>
 						{/* Music time slider */}
-						<PlayerSlider maxValue={200} />
+						<PlayerSlider maxValue={200} onValueChange={() => {}} />
 						{/* Playback controls */}
 						<div className="grid grid-cols-3 w-full">
 							<div />
-							<PlayerControls />
+							<PlayerControls
+								nextDisabled={trackIndex + 1 >= tracks.length}
+								previousDisabled={trackIndex - 1 < 0}
+							/>
 
 							<PlayerVolumeController />
 						</div>
