@@ -1,11 +1,11 @@
 import React from 'react';
-import { Player } from '../Player';
+import { PlayerIcon } from './PlayerIcon';
 
 export default {
 	title: 'PlayerIcon',
-	component: Player
+	component: PlayerIcon
 };
 
 export const Example = () => (
-	<Player.Icon imgSrc="https://images5.alphacoders.com/896/896907.png" />
+	<PlayerIcon imgSrc="https://images5.alphacoders.com/896/896907.png" />
 );

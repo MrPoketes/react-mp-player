@@ -3,11 +3,17 @@ import { Player } from './Player';
 
 export default {
 	title: 'Player',
-	component: Player.Root
+	component: Player
 };
 
 export const Example = () => (
-	<Player.Root>
-		<Player.Icon imgSrc="https://images5.alphacoders.com/896/896907.png" />
-	</Player.Root>
+	<Player
+		tracks={[
+			{
+				imgSrc: 'https://images5.alphacoders.com/896/896907.png',
+				artist: 'Lisa',
+				title: 'Adamas'
+			}
+		]}
+	/>
 );
