@@ -1,6 +1,6 @@
 import React from 'react';
 import { Player } from '../components/Player/Player';
-import tracks from '../components/Player/PlayerRoot/tracks';
+import tracks from './tracks';
 export default {
 	title: 'Player',
 	component: Player
