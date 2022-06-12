@@ -2,6 +2,8 @@ import React from 'react';
 
 interface PlayerContextInterface {
 	audioElement: HTMLAudioElement;
+	isPlaying: boolean;
+	playAudio: () => void;
 	nextTrack: () => void;
 	previousTrack: () => void;
 }

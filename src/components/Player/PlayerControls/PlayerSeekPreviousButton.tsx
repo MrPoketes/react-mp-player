@@ -11,7 +11,7 @@ export const PlayerSeekPreviousButton: React.FC<PlayerSeekButtonInterface> = ({
 	return (
 		<button
 			disabled={disabled}
-			className={`w-8 h-8 rounded-full focus:ring-2 focus:ring-blue-400 text-neutral-700 m-1 transition ease-in-out ${
+			className={`w-8 h-8 rounded-full focus:ring-2 focus:outline-none focus:ring-blue-400 text-neutral-700 m-1 transition ease-in-out ${
 				disabled ? 'cursor-not-allowed text-neutral-200' : ''
 			}`}
 			onClick={() => previousTrack()}

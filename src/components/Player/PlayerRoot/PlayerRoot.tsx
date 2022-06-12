@@ -21,32 +21,88 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 	showImage = true
 }) => {
 	const [trackIndex, setTrackIndex] = useState(0);
+	const [trackTime, setTrackTime] = useState(0);
 	const currentTrack = tracks[trackIndex];
-	const [audioState, setAudioState] = useState(new Audio(currentTrack.audioSrc));
+	const audioRef = useRef(new Audio(currentTrack.audioSrc));
+	const [isPlaying, setIsPlaying] = useState(false);
+
+	const intervalRef: any = useRef();
+	const isReady = useRef(false);
+
+	const startTimer = () => {
+		clearInterval(intervalRef.current);
+
+		// Every 1second update track time
+		intervalRef.current = setInterval(() => {
+			if (audioRef.current.ended) {
+				nextTrack();
+			} else {
+				setTrackTime(audioRef.current.currentTime);
+			}
+		}, 1000);
+	};
 
 	const previousTrack = (): void => {
 		if (trackIndex - 1 <= 0) {
+			audioRef.current.currentTime = 0;
 			setTrackIndex(trackIndex - 1);
 		}
 	};
 
 	const nextTrack = (): void => {
-		console.log(tracks);
 		if (trackIndex + 1 < tracks.length) {
+			audioRef.current.currentTime = 0;
 			setTrackIndex(trackIndex + 1);
 		}
 	};
 
+	const seek = (time: number): void => {
+		startTimer();
+		audioRef.current.currentTime = time;
+		setTrackTime(audioRef.current.currentTime);
+	};
+
+	useEffect(() => {
+		if (isPlaying) {
+			audioRef.current.play();
+			startTimer();
+		} else {
+			audioRef.current.pause();
+		}
+	}, [isPlaying]);
+
 	// Handle changing tracks
 	useEffect(() => {
-		audioState.pause();
-		setAudioState(new Audio(currentTrack.audioSrc));
+		audioRef.current.pause();
+		const { volume } = audioRef.current;
+		audioRef.current = new Audio(currentTrack.audioSrc);
+		if (isReady.current) {
+			audioRef.current.currentTime = 0;
+			audioRef.current.volume = volume;
+			setTrackTime(audioRef.current.currentTime);
+			audioRef.current.play();
+
+			setIsPlaying(true);
+			startTimer();
+		} else {
+			isReady.current = true;
+		}
 	}, [trackIndex]);
+
+	// Unmount
+	useEffect(() => {
+		return () => {
+			audioRef.current.pause();
+			clearInterval(intervalRef.current);
+		};
+	}, []);
 
 	return (
 		<PlayerContext.Provider
 			value={{
-				audioElement: audioState,
+				audioElement: audioRef.current,
+				isPlaying: isPlaying,
+				playAudio: () => setIsPlaying(!isPlaying),
 				nextTrack: () => nextTrack(),
 				previousTrack: () => previousTrack()
 			}}
@@ -67,7 +123,15 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 							{currentTrack.artist}
 						</p>
 						{/* Music time slider */}
-						<PlayerSlider maxValue={200} onValueChange={() => {}} />
+						<PlayerSlider
+							value={trackTime}
+							maxValue={
+								isNaN(audioRef.current.duration)
+									? 0
+									: audioRef.current.duration
+							}
+							onValueChange={value => seek(value)}
+						/>
 						{/* Playback controls */}
 						<div className="grid grid-cols-3 w-full">
 							<div />
