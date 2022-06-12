@@ -34,14 +34,15 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 		},
 		() => audioRef.current.pause()
 	);
+	/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 	const intervalRef: any = useRef();
-	// const isReady = useRef(false);
+
 	const isReady = useIsMounted();
 
 	const startTimer = () => {
 		clearInterval(intervalRef.current);
 
-		// Every 1second update track time
+		// Every 1second update track time, or if track finished, go to next track
 		intervalRef.current = setInterval(() => {
 			if (audioRef.current.ended) {
 				nextTrack();
@@ -73,7 +74,14 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 		setTrackTime(audioRef.current.currentTime);
 	};
 
-	// Handle changing tracks
+	/* 
+	1. It is using the useEffect hook to pause the current audio track.
+	2. It is then creating a new Audio object with the current track's audioSrc.
+	3. It is then checking if the audio is ready to play.
+	4. If the audio is ready to play, it is setting the current time to 0, setting the volume to the
+	volume of the previous track, setting the track time to the current time of the audio, playing the
+	audio, and setting the isPlaying state to true. 
+	*/
 	useEffect(() => {
 		audioRef.current.pause();
 		const { volume } = audioRef.current;
