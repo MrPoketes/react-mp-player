@@ -1,8 +1,8 @@
 import React from 'react';
-import { PlayerControls } from '../components/Player/PlayerControls/PlayerControls';
-import { PlayerPlayButton } from '../components/Player/PlayerControls/PlayerPlayButton';
-import { PlayerSeekNextButton } from '../components/Player/PlayerControls/PlayerSeekNextButton';
-import { PlayerSeekPreviousButton } from '../components/Player/PlayerControls/PlayerSeekPreviousButton';
+import { PlayerControls } from '../components/PlayerControls/PlayerControls';
+import { PlayerPlayButton } from '../components/PlayerControls/PlayerPlayButton';
+import { PlayerSeekNextButton } from '../components/PlayerControls/PlayerSeekNextButton';
+import { PlayerSeekPreviousButton } from '../components/PlayerControls/PlayerSeekPreviousButton';
 
 export default {
 	title: 'PlayerControls',

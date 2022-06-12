@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerVolumeController } from '../components/Player/PlayerVolumeController/PlayerVolumeController';
+import { PlayerVolumeController } from '../components/PlayerVolumeController/PlayerVolumeController';
 
 export default {
 	title: 'PlayerVolumeController',
