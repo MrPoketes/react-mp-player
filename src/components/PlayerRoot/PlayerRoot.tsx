@@ -91,6 +91,7 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 	useEffect(() => {
 		return () => {
 			audioRef.current.pause();
+			setIsPlaying(false);
 			clearInterval(intervalRef.current);
 		};
 	}, []);
