@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Icon from '@mdi/react';
 import { mdiPause, mdiPlay } from '@mdi/js';
 import { PlayerContext } from '../PlayerRoot/PlayerContext';

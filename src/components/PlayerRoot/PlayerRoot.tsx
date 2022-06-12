@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useIsMounted } from '../../hooks/useIsMounted';
+import { usePlaying } from '../../hooks/usePlaying';
 import { PlayerControls } from '../PlayerControls/PlayerControls';
 import { PlayerIcon } from '../PlayerIcon/PlayerIcon';
 import { PlayerSlider } from '../PlayerSlider/PlayerSlider';
@@ -24,10 +26,17 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 	const [trackTime, setTrackTime] = useState(0);
 	const currentTrack = tracks[trackIndex];
 	const audioRef = useRef(new Audio(currentTrack.audioSrc));
-	const [isPlaying, setIsPlaying] = useState(false);
-
+	const [isPlaying, setIsPlaying] = usePlaying(
+		false,
+		() => {
+			audioRef.current.play();
+			startTimer();
+		},
+		() => audioRef.current.pause()
+	);
 	const intervalRef: any = useRef();
-	const isReady = useRef(false);
+	// const isReady = useRef(false);
+	const isReady = useIsMounted();
 
 	const startTimer = () => {
 		clearInterval(intervalRef.current);
@@ -53,6 +62,8 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 		if (trackIndex + 1 < tracks.length) {
 			audioRef.current.currentTime = 0;
 			setTrackIndex(trackIndex + 1);
+		} else {
+			setIsPlaying(false);
 		}
 	};
 
@@ -62,30 +73,17 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 		setTrackTime(audioRef.current.currentTime);
 	};
 
-	useEffect(() => {
-		if (isPlaying) {
-			audioRef.current.play();
-			startTimer();
-		} else {
-			audioRef.current.pause();
-		}
-	}, [isPlaying]);
-
 	// Handle changing tracks
 	useEffect(() => {
 		audioRef.current.pause();
 		const { volume } = audioRef.current;
 		audioRef.current = new Audio(currentTrack.audioSrc);
-		if (isReady.current) {
+		if (isReady) {
 			audioRef.current.currentTime = 0;
 			audioRef.current.volume = volume;
 			setTrackTime(audioRef.current.currentTime);
 			audioRef.current.play();
-
 			setIsPlaying(true);
-			startTimer();
-		} else {
-			isReady.current = true;
 		}
 	}, [trackIndex]);
 
