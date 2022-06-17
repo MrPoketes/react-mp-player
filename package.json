@@ -1,6 +1,6 @@
 {
 	"name": "react-mp-player",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"private": false,
 	"main": "src/index.ts",
 	"dependencies": {
@@ -15,7 +15,8 @@
 	},
 	"files": [
 		"src/components",
-		"src/index.ts"
+		"src/index.ts",
+		"src/hooks"
 	],
 	"scripts": {
 		"start": "concurrently -k \"yarn build:tailwind --watch\"  \"start-storybook -p 6006\"",
