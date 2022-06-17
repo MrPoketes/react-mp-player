@@ -53,7 +53,7 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 	};
 
 	const previousTrack = (): void => {
-		if (trackIndex - 1 <= 0) {
+		if (trackIndex - 1 >= 0) {
 			audioRef.current.currentTime = 0;
 			setTrackIndex(trackIndex - 1);
 		}
