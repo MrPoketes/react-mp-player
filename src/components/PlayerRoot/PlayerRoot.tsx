@@ -24,8 +24,8 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 }) => {
 	const [trackIndex, setTrackIndex] = useState(0);
 	const [trackTime, setTrackTime] = useState(0);
-	const currentTrack = tracks[trackIndex];
-	const audioRef = useRef(new Audio(currentTrack.audioSrc));
+	const currentTrack = tracks.length > 0 ? tracks[trackIndex] : null;
+	const audioRef = useRef(new Audio(currentTrack?.audioSrc));
 	const [isPlaying, setIsPlaying] = usePlaying(
 		false,
 		() => {
@@ -85,7 +85,7 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 	useEffect(() => {
 		audioRef.current.pause();
 		const { volume } = audioRef.current;
-		audioRef.current = new Audio(currentTrack.audioSrc);
+		audioRef.current = new Audio(currentTrack?.audioSrc);
 		if (isReady) {
 			audioRef.current.currentTime = 0;
 			audioRef.current.volume = volume;
@@ -119,15 +119,15 @@ export const PlayerRoot: React.FC<PlayerRootInterface> = ({
 				style={{ boxShadow: '3px 3px 15px 2px rgba(0, 0, 0, 0.25)' }}
 			>
 				<div className="mx-2 flex items-center w-full">
-					{showImage && <PlayerIcon imgSrc={currentTrack.imgSrc} />}
+					{showImage && <PlayerIcon imgSrc={currentTrack?.imgSrc} />}
 
 					<div className="w-full flex flex-col items-center justify-end h-full mx-3">
 						{/* Track info */}
 						<p className="uppercase font-bold text-2xl">
-							{currentTrack.title}
+							{currentTrack?.title}
 						</p>
 						<p className="uppercase font-medium text-base">
-							{currentTrack.artist}
+							{currentTrack?.artist}
 						</p>
 						{/* Music time slider */}
 						<PlayerSlider
