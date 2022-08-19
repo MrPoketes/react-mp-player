@@ -1,6 +1,6 @@
 {
 	"name": "react-mp-player",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"private": false,
 	"module": "./dist/react-mp-player.js",
 	"main": "./dist/react-mp-player.cjs",
