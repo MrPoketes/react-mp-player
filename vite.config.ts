@@ -18,12 +18,5 @@ export default defineConfig({
 		sourcemap: true,
 		minify: false
 	},
-	plugins: [
-		react({
-			babel: {
-				plugins: process.env.NODE_ENV === 'production' ? [] : ['istanbul']
-			}
-		}),
-		dts()
-	]
+	plugins: [react(), dts()]
 });
